@@ -18,40 +18,29 @@ router.post('/login', async (req, res) => {
   const valid = await bcrypt.compare(password, adminHash);
   if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
   req.session.admin = true;
-  req.session.email = username + '@local';
-  req.session.name = 'Sílvia';
+  req.session.email = 'admin@local';
+  req.session.name = 'Admin';
   res.json({ ok: true });
 });
 
-// Google login — called from frontend with the access_token from Supabase
+// Google login — frontend sends email after Supabase auth
 router.post('/google', async (req, res) => {
-  const { access_token } = req.body;
-  if (!access_token) return res.status(400).json({ error: 'No token' });
+  const { email, name } = req.body;
+  if (!email) return res.status(400).json({ error: 'No email' });
 
-  try {
-    // Get user info from Supabase using the token
-    const { data: { user }, error } = await supabase.auth.getUser(access_token);
-    if (error || !user) return res.status(401).json({ error: 'Invalid token' });
+  // Check if this email is in the admins table
+  const { data: adminRow } = await supabase
+    .from('admins')
+    .select('*')
+    .eq('email', email)
+    .single();
 
-    const email = user.email;
-    const name  = user.user_metadata?.full_name || email;
+  if (!adminRow) return res.status(403).json({ error: 'not_admin' });
 
-    // Check if this email is an admin
-    const { data: adminRow } = await supabase
-      .from('admins')
-      .select('*')
-      .eq('email', email)
-      .single();
-
-    if (!adminRow) return res.status(403).json({ error: 'not_admin' });
-
-    req.session.admin = true;
-    req.session.email = email;
-    req.session.name  = name;
-    res.json({ ok: true, name });
-  } catch(e) {
-    res.status(500).json({ error: 'server_error' });
-  }
+  req.session.admin = true;
+  req.session.email = email;
+  req.session.name  = name || email;
+  res.json({ ok: true });
 });
 
 router.get('/me', (req, res) => {
