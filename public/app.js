@@ -480,23 +480,42 @@ function applyTheme(name) {
   Object.entries(t).forEach(([k,v]) => r.style.setProperty('--' + k, v));
 }
 
-// ── Google OAuth callback handling ────────────────────────────
-(function() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('admin') === '1') {
-    // Clean URL and go to admin
-    history.replaceState({}, '', '/');
-    checkAuth().then(() => showPage('admin'));
+// ── Google OAuth via Supabase JS (browser-side) ──────────────
+const _supabase = window._supabaseClient;
+
+async function doGoogleLogin() {
+  try {
+    const { error } = await _supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin + '/login-callback' }
+    });
+    if (error) alert('Erro ao iniciar login Google: ' + error.message);
+  } catch(e) {
+    alert('Erro: ' + e.message);
   }
-  if (params.get('error')) {
+}
+
+// Handle redirect back from Google
+(async function() {
+  const hash = window.location.hash;
+  const path = window.location.pathname;
+
+  if (path === '/login-callback' || hash.includes('access_token')) {
     history.replaceState({}, '', '/');
-    const msgs = {
-      not_admin: 'Este email não tem permissão de administrador.',
-      auth_failed: 'Autenticação Google falhou. Tenta novamente.',
-      server_error: 'Erro do servidor. Tenta novamente.'
-    };
-    alert(msgs[params.get('error')] || 'Erro de autenticação.');
-    showPage('login');
+    try {
+      const { data: { session } } = await _supabase.auth.getSession();
+      if (!session) { alert('Sessão inválida. Tenta novamente.'); showPage('login'); return; }
+
+      const res = await api('POST', '/auth/google', { access_token: session.access_token });
+      checkAuth().then(() => showPage('admin'));
+    } catch(e) {
+      const msgs = {
+        not_admin: 'Este email não tem permissão de administrador.',
+        server_error: 'Erro do servidor. Tenta novamente.'
+      };
+      alert(msgs[e.message] || 'Erro de autenticação: ' + e.message);
+      showPage('login');
+    }
   }
 })();
 
