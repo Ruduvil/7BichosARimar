@@ -3,13 +3,12 @@ const bcrypt = require('bcryptjs');
 const { supabase, getSetting, setSetting } = require('../db/database');
 const router = express.Router();
 
-// ── Middleware ────────────────────────────────────────────────
 function requireAdmin(req, res, next) {
   if (!req.session.admin) return res.status(401).json({ error: 'Unauthorized' });
   next();
 }
 
-// ── Traditional login (kept as fallback) ─────────────────────
+// Traditional login
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) return res.status(400).json({ error: 'Missing fields' });
@@ -24,31 +23,18 @@ router.post('/login', async (req, res) => {
   res.json({ ok: true });
 });
 
-// ── Google OAuth via Supabase ─────────────────────────────────
-
-// GET /api/auth/google — redirect to Supabase Google OAuth
-router.get('/google', async (req, res) => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: process.env.SITE_URL + '/api/auth/google/callback'
-    }
-  });
-  if (error || !data?.url) return res.status(500).json({ error: 'OAuth init failed' });
-  res.redirect(data.url);
-});
-
-// GET /api/auth/google/callback — Supabase redirects here with code
-router.get('/google/callback', async (req, res) => {
-  const { code } = req.query;
-  if (!code) return res.redirect('/?error=no_code');
+// Google login — called from frontend with the access_token from Supabase
+router.post('/google', async (req, res) => {
+  const { access_token } = req.body;
+  if (!access_token) return res.status(400).json({ error: 'No token' });
 
   try {
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-    if (error || !data?.user) return res.redirect('/?error=auth_failed');
+    // Get user info from Supabase using the token
+    const { data: { user }, error } = await supabase.auth.getUser(access_token);
+    if (error || !user) return res.status(401).json({ error: 'Invalid token' });
 
-    const email = data.user.email;
-    const name  = data.user.user_metadata?.full_name || email;
+    const email = user.email;
+    const name  = user.user_metadata?.full_name || email;
 
     // Check if this email is an admin
     const { data: adminRow } = await supabase
@@ -57,18 +43,17 @@ router.get('/google/callback', async (req, res) => {
       .eq('email', email)
       .single();
 
-    if (!adminRow) return res.redirect('/?error=not_admin');
+    if (!adminRow) return res.status(403).json({ error: 'not_admin' });
 
     req.session.admin = true;
     req.session.email = email;
     req.session.name  = name;
-    res.redirect('/?admin=1');
+    res.json({ ok: true, name });
   } catch(e) {
-    res.redirect('/?error=server_error');
+    res.status(500).json({ error: 'server_error' });
   }
 });
 
-// GET /api/auth/me
 router.get('/me', (req, res) => {
   res.json({
     admin: !!req.session.admin,
@@ -77,13 +62,11 @@ router.get('/me', (req, res) => {
   });
 });
 
-// POST /api/auth/logout
 router.post('/logout', (req, res) => {
   req.session.destroy();
   res.json({ ok: true });
 });
 
-// POST /api/auth/change-password
 router.post('/change-password', requireAdmin, async (req, res) => {
   const { password } = req.body;
   if (!password || password.length < 6) return res.status(400).json({ error: 'Too short' });
@@ -92,16 +75,12 @@ router.post('/change-password', requireAdmin, async (req, res) => {
   res.json({ ok: true });
 });
 
-// ── Admin management ──────────────────────────────────────────
-
-// GET /api/auth/admins
 router.get('/admins', requireAdmin, async (req, res) => {
   const { data, error } = await supabase.from('admins').select('*').order('created_at');
   if (error) return res.status(500).json({ error: error.message });
   res.json(data || []);
 });
 
-// POST /api/auth/admins
 router.post('/admins', requireAdmin, async (req, res) => {
   const { email, name } = req.body;
   if (!email) return res.status(400).json({ error: 'Email required' });
@@ -110,9 +89,7 @@ router.post('/admins', requireAdmin, async (req, res) => {
   res.json({ ok: true });
 });
 
-// DELETE /api/auth/admins/:id
 router.delete('/admins/:id', requireAdmin, async (req, res) => {
-  // Prevent deleting yourself
   const { data } = await supabase.from('admins').select('email').eq('id', req.params.id).single();
   if (data?.email === req.session.email) return res.status(400).json({ error: 'Cannot remove yourself' });
   await supabase.from('admins').delete().eq('id', req.params.id);
