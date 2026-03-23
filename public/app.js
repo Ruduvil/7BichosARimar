@@ -487,7 +487,7 @@ async function doGoogleLogin() {
   try {
     const { error } = await _supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin + '/login-callback' }
+      options: { redirectTo: window.location.origin }
     });
     if (error) alert('Erro ao iniciar login Google: ' + error.message);
   } catch(e) {
@@ -495,27 +495,40 @@ async function doGoogleLogin() {
   }
 }
 
-// Handle redirect back from Google
+// Handle redirect back from Google — Supabase puts token in URL hash
 (async function() {
-  const hash = window.location.hash;
-  const path = window.location.pathname;
+  if (!window.location.hash.includes('access_token')) return;
 
-  if (path === '/login-callback' || hash.includes('access_token')) {
-    history.replaceState({}, '', '/');
-    try {
-      const { data: { session } } = await _supabase.auth.getSession();
-      if (!session) { alert('Sessão inválida. Tenta novamente.'); showPage('login'); return; }
+  // Clean URL immediately
+  history.replaceState({}, '', '/');
 
-      const res = await api('POST', '/auth/google', { access_token: session.access_token });
-      checkAuth().then(() => showPage('admin'));
-    } catch(e) {
-      const msgs = {
-        not_admin: 'Este email não tem permissão de administrador.',
-        server_error: 'Erro do servidor. Tenta novamente.'
-      };
-      alert(msgs[e.message] || 'Erro de autenticação: ' + e.message);
-      showPage('login');
+  try {
+    // Let Supabase parse the hash and create a session
+    const { data, error } = await _supabase.auth.getSession();
+    if (error || !data.session) {
+      // Try getting user directly from hash
+      const params = new URLSearchParams(window.location.hash.slice(1));
+      const token = params.get('access_token');
+      if (!token) { alert('Sessão inválida. Tenta novamente.'); showPage('login'); return; }
     }
+
+    const { data: userData } = await _supabase.auth.getUser();
+    if (!userData?.user) { alert('Não foi possível obter os dados do utilizador.'); showPage('login'); return; }
+
+    const email = userData.user.email;
+    const name  = userData.user.user_metadata?.full_name || email;
+
+    // Tell our server this email logged in via Google
+    await api('POST', '/auth/google', { email, name });
+    await checkAuth();
+    showPage('admin');
+  } catch(e) {
+    if (e.message === 'not_admin') {
+      alert('Este email não tem permissão de administrador.');
+    } else {
+      alert('Erro de autenticação: ' + e.message);
+    }
+    showPage('login');
   }
 })();
 
