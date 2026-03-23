@@ -602,3 +602,34 @@ footer {
   .gallery-upload-row { grid-template-columns: 1fr; }
   .simple-hero { padding: 3rem 0 2rem; }
 }
+
+/* ===== GOOGLE LOGIN ===== */
+.btn-google {
+  display: flex; align-items: center; justify-content: center; gap: .7rem;
+  width: 100%; padding: .8rem; border: 1.5px solid var(--border);
+  border-radius: 8px; background: #fff; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500;
+  text-decoration: none; cursor: pointer; transition: background .2s, border-color .2s;
+  margin-bottom: .5rem;
+}
+.btn-google:hover { background: #f8f8f8; border-color: #aaa; }
+
+.auth-divider {
+  display: flex; align-items: center; gap: 1rem;
+  margin: 1rem 0; color: var(--muted); font-size: .8rem;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+/* ===== ADMINS LIST ===== */
+.admin-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .8rem 0; border-bottom: 1px solid var(--border);
+}
+.admin-row:last-child { border-bottom: none; }
+.admin-row-info strong { display: block; font-size: .9rem; }
+.admin-row-info small { color: var(--muted); font-size: .78rem; }
+.admin-row-you { font-size: .72rem; background: var(--green-pale); color: var(--green); padding: .2rem .6rem; border-radius: 20px; font-weight: 500; }
+.admin-row-del { background: none; border: none; color: #dc2626; cursor: pointer; font-size: .8rem; font-weight: 500; padding: .3rem .6rem; border-radius: 6px; transition: background .2s; }
+.admin-row-del:hover { background: #fef2f2; }
