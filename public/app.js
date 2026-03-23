@@ -495,38 +495,43 @@ async function doGoogleLogin() {
   }
 }
 
-// Handle redirect back from Google — Supabase puts token in URL hash
+// Handle redirect back from Google
 (async function() {
-  if (!window.location.hash.includes('access_token')) return;
+  const hash = window.location.hash;
+  if (!hash.includes('access_token')) return;
 
-  // Clean URL immediately
+  // Parse token directly from URL hash — most reliable method
+  const params = new URLSearchParams(hash.slice(1));
+  const access_token = params.get('access_token');
+  if (!access_token) return;
+
+  // Clean URL
   history.replaceState({}, '', '/');
 
   try {
-    // Let Supabase parse the hash and create a session
-    const { data, error } = await _supabase.auth.getSession();
-    if (error || !data.session) {
-      // Try getting user directly from hash
-      const params = new URLSearchParams(window.location.hash.slice(1));
-      const token = params.get('access_token');
-      if (!token) { alert('Sessão inválida. Tenta novamente.'); showPage('login'); return; }
-    }
+    // Get user info directly with the access token
+    const res = await fetch('https://wfsrotpoiblitvulptjk.supabase.co/auth/v1/user', {
+      headers: {
+        'Authorization': 'Bearer ' + access_token,
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indmc3JvdHBvaWJsaXR2dWxwdGprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNTM2MTksImV4cCI6MjA4OTgyOTYxOX0.OF2fRugd-508a6OUOJouKM3QpsMy1dn1fTVxLct_bUk'
+      }
+    });
+    const user = await res.json();
+    if (!user.email) throw new Error('no_user');
 
-    const { data: userData } = await _supabase.auth.getUser();
-    if (!userData?.user) { alert('Não foi possível obter os dados do utilizador.'); showPage('login'); return; }
-
-    const email = userData.user.email;
-    const name  = userData.user.user_metadata?.full_name || email;
-
-    // Tell our server this email logged in via Google
-    await api('POST', '/auth/google', { email, name });
+    // Send email to our server to create session
+    await api('POST', '/auth/google', {
+      email: user.email,
+      name: user.user_metadata?.full_name || user.email
+    });
     await checkAuth();
     showPage('admin');
   } catch(e) {
     if (e.message === 'not_admin') {
       alert('Este email não tem permissão de administrador.');
     } else {
-      alert('Erro de autenticação: ' + e.message);
+      alert('Erro de autenticação. Tenta novamente.');
+      console.error(e);
     }
     showPage('login');
   }
