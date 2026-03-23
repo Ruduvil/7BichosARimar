@@ -479,3 +479,88 @@ function applyTheme(name) {
   const r = document.documentElement;
   Object.entries(t).forEach(([k,v]) => r.style.setProperty('--' + k, v));
 }
+
+// ── Google OAuth callback handling ────────────────────────────
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('admin') === '1') {
+    // Clean URL and go to admin
+    history.replaceState({}, '', '/');
+    checkAuth().then(() => showPage('admin'));
+  }
+  if (params.get('error')) {
+    history.replaceState({}, '', '/');
+    const msgs = {
+      not_admin: 'Este email não tem permissão de administrador.',
+      auth_failed: 'Autenticação Google falhou. Tenta novamente.',
+      server_error: 'Erro do servidor. Tenta novamente.'
+    };
+    alert(msgs[params.get('error')] || 'Erro de autenticação.');
+    showPage('login');
+  }
+})();
+
+// ── Admin management ──────────────────────────────────────────
+async function loadAdmins() {
+  const wrap = document.getElementById('adminsList');
+  if (!wrap) return;
+  try {
+    const admins = await api('GET', '/auth/admins');
+    if (!admins.length) { wrap.innerHTML = '<div class="empty-admin">Nenhum administrador ainda.</div>'; return; }
+    wrap.innerHTML = admins.map(a => `
+      <div class="admin-row">
+        <div class="admin-row-info">
+          <strong>${a.name || a.email}</strong>
+          <small>${a.email}</small>
+        </div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          ${a.email === (STATE.currentEmail || '') ? '<span class="admin-row-you">Tu</span>' : ''}
+          <button class="admin-row-del" onclick="removeAdmin(${a.id}, '${a.email}')">✕ Remover</button>
+        </div>
+      </div>`).join('');
+  } catch(e) { wrap.innerHTML = '<div class="empty-admin">Erro ao carregar.</div>'; }
+}
+
+async function addAdmin() {
+  const email = document.getElementById('newAdminEmail').value.trim();
+  const name  = document.getElementById('newAdminName').value.trim();
+  const msg   = document.getElementById('adminAddMsg');
+  if (!email) { msg.innerHTML = '❌ Email obrigatório.'; msg.style.display='block'; return; }
+  try {
+    await api('POST', '/auth/admins', { email, name });
+    document.getElementById('newAdminEmail').value = '';
+    document.getElementById('newAdminName').value  = '';
+    msg.innerHTML = '✅ Administrador adicionado!';
+    msg.style.display = 'block';
+    setTimeout(() => msg.style.display = 'none', 3000);
+    loadAdmins();
+  } catch(e) {
+    msg.innerHTML = '❌ ' + e.message;
+    msg.style.display = 'block';
+  }
+}
+
+async function removeAdmin(id, email) {
+  if (!confirm(`Remover ${email} como administrador?`)) return;
+  try {
+    await api('DELETE', '/auth/admins/' + id);
+    loadAdmins();
+  } catch(e) { alert('Erro: ' + e.message); }
+}
+
+// Patch switchAdmin to handle admins panel
+const _origSwitchAdmin = switchAdmin;
+switchAdmin = function(panel, btn) {
+  _origSwitchAdmin(panel, btn);
+  if (panel === 'admins') loadAdmins();
+};
+
+// Patch checkAuth to store email
+const _origCheckAuth = checkAuth;
+checkAuth = async function() {
+  try {
+    const { admin, email, name } = await api('GET', '/auth/me');
+    STATE.currentEmail = email;
+    setAdminState(admin);
+  } catch(e) { setAdminState(false); }
+};
