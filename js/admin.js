@@ -1,6 +1,5 @@
 const loginSection = document.getElementById('loginSection');
 const dashboardSection = document.getElementById('dashboardSection');
-const loginForm = document.getElementById('loginForm');
 const btnLogout = document.getElementById('btnLogout');
 
 // Tab Switching
@@ -24,45 +23,87 @@ window.switchTab = function(tabName) {
 document.addEventListener('DOMContentLoaded', async () => {
   if (!window.supabaseClient || SUPABASE_URL === 'ATUALIZA_NO_SUPABASE_PROJECT_URL') {
     document.getElementById('loginError').innerText = "As chaves do Supabase não estão configuradas (ver js/supabase.js). Não podes fazer login.";
+    document.getElementById('loginError').style.color = "red";
     return;
   }
 
+  // Com o OAuth/Magic Link a sessão pode ser validada no load.
   const { data: { session } } = await window.supabaseClient.auth.getSession();
   if (session) {
     showDashboard();
   }
 });
 
-// Login
-loginForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('adminEmail').value;
-  const password = document.getElementById('adminPassword').value;
+// Magic Link Login
+const btnMagicLink = document.getElementById('btnMagicLink');
+if(btnMagicLink) {
+  btnMagicLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('adminEmail').value;
+    if(!email) {
+      document.getElementById('loginError').innerText = "Insere o teu email no campo acima primeiro!";
+      document.getElementById('loginError').style.color = "red";
+      return;
+    }
 
-  const { data, error } = await window.supabaseClient.auth.signInWithPassword({
-    email, password
+    document.getElementById('loginError').innerText = "A enviar Link Mágico para o teu email...";
+    document.getElementById('loginError').style.color = "orange";
+
+    const { error } = await window.supabaseClient.auth.signInWithOtp({
+      email: email,
+      options: {
+        emailRedirectTo: window.location.origin + window.location.pathname
+      }
+    });
+
+    if (error) {
+      document.getElementById('loginError').innerText = "Erro: " + error.message;
+      document.getElementById('loginError').style.color = "red";
+    } else {
+      document.getElementById('loginError').innerText = "Link mágico enviado! Verifica o teu email (e a pasta de spam) e clica no botão fornecido para entrar.";
+      document.getElementById('loginError').style.color = "green";
+    }
   });
+}
 
-  if (error) {
-    document.getElementById('loginError').innerText = "Erro: " + error.message;
-  } else {
-    showDashboard();
-  }
-});
+// Google Login
+const btnGoogle = document.getElementById('btnGoogle');
+if(btnGoogle) {
+  btnGoogle.addEventListener('click', async (e) => {
+    e.preventDefault();
+    document.getElementById('loginError').innerText = "A redirecionar para o Google...";
+    document.getElementById('loginError').style.color = "orange";
+    
+    const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + window.location.pathname
+      }
+    });
+    
+    if (error) {
+      document.getElementById('loginError').innerText = "Erro: " + error.message;
+      document.getElementById('loginError').style.color = "red";
+    }
+  });
+}
 
+// Logout
 btnLogout.addEventListener('click', async () => {
   await window.supabaseClient.auth.signOut();
   loginSection.classList.remove('hidden');
   dashboardSection.classList.add('hidden');
   btnLogout.classList.add('hidden');
+  document.getElementById('adminEmail').value = '';
+  document.getElementById('loginError').innerText = '';
 });
 
+// Dashboard
 async function showDashboard() {
   loginSection.classList.add('hidden');
   dashboardSection.classList.remove('hidden');
   btnLogout.classList.remove('hidden');
 
-  // Load current content info into inputs
   const { data, error } = await window.supabaseClient.from('site_content').select('*');
   if (data) {
     data.forEach(item => {
@@ -73,7 +114,7 @@ async function showDashboard() {
   }
 }
 
-// Save Content
+// Guardar Textos
 document.getElementById('btnSaveContent').addEventListener('click', async () => {
   const title = document.getElementById('editHeroTitle').value;
   const desc = document.getElementById('editHeroDesc').value;
@@ -96,6 +137,7 @@ document.getElementById('btnSaveContent').addEventListener('click', async () => 
   }
 });
 
+// Ler encomendas
 async function loadOrders() {
   const list = document.getElementById('ordersList');
   list.innerHTML = "A carregar...";
@@ -108,7 +150,7 @@ async function loadOrders() {
     data.forEach(order => {
       const li = document.createElement('li');
       li.style = "padding: 1rem; border: 1px solid #e2e8f0; margin-bottom: 1rem; border-radius: 8px;";
-      li.innerHTML = `<strong>${order.customer_name}</strong> (${order.email}) <br><span style="color: #718096; font-size: 0.9rem;">${order.address}</span> <br><span style="background: var(--secondary); padding: 2px 8px; border-radius: 4px; font-size: 0.85rem;">Status: ${order.status}</span>`;
+      li.innerHTML = `<strong>${order.customer_name}</strong> (${order.email}) <br><span style="color: #718096; font-size: 0.9rem;">${order.address}</span> <br><span style="background: var(--secondary); padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; color: #1a202c;">Status: ${order.status}</span>`;
       list.appendChild(li);
     });
   } else {

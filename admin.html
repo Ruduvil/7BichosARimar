@@ -57,7 +57,7 @@
 <body>
 
   <nav class="navbar">
-    <a href="index.html" class="nav-brand">7 Bichos a Rimar (Admin)</a>
+    <a href="index.html" class="nav-brand">🍃 7 Bichos a Rimar (Admin)</a>
     <div class="nav-links">
       <button id="btnLogout" class="btn-primary hidden" style="background: #e53e3e;">Terminar Sessão</button>
     </div>
@@ -71,15 +71,16 @@
       <p style="margin-bottom: 2rem; color: #718096;">Isto é apenas para o proprietário do site modificar os conteúdos.</p>
       <form id="loginForm">
         <div class="form-group">
-          <label>Email do Administrador</label>
-          <input type="email" id="adminEmail" class="form-control" required>
+          <label>O teu Email</label>
+          <input type="email" id="adminEmail" class="form-control" placeholder="exemplo@gmail.com" required>
         </div>
-        <div class="form-group">
-          <label>Palavra-passe</label>
-          <input type="password" id="adminPassword" class="form-control" required>
-        </div>
-        <button type="submit" class="btn-primary">Entrar Seguro</button>
-        <p id="loginError" style="color: red; margin-top: 1rem;"></p>
+        <button type="button" id="btnMagicLink" class="btn-primary" style="width: 100%; margin-bottom: 1rem;">Entrar com Magic Link (Receber no Email)</button>
+        <div style="text-align: center; margin: 1rem 0; color: #aaa; font-weight: bold;">OU</div>
+        <button type="button" id="btnGoogle" class="btn-primary" style="background: white; color: #4a5568; border: 2px solid #e2e8f0; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style="width: 20px;">
+          Entrar com o Google
+        </button>
+        <p id="loginError" style="margin-top: 1rem; text-align: center; font-weight: bold;"></p>
       </form>
     </div>
 
@@ -96,7 +97,7 @@
       <div id="tabContent">
         <div class="form-group">
           <label>Título Principal (Página Inicial)</label>
-          <input type="text" id="editHeroTitle" class="form-control" placeholder="A magia das palavras para as crianças">
+          <input type="text" id="editHeroTitle" class="form-control">
         </div>
         <div class="form-group">
           <label>Texto Descritivo (Página Inicial)</label>
@@ -113,7 +114,7 @@
       <!-- Orders Viewer -->
       <div id="tabOrders" class="hidden">
         <h3>Últimas Encomendas</h3>
-        <p style="color: #4a5568; margin-bottom: 1rem;">O sistema de pagamento deve estar configurado na Base de Dados para aparecerem aqui.</p>
+        <p style="color: #4a5568; margin-bottom: 1rem;">As encomendas fictícias aparecerão aqui.</p>
         <ul id="ordersList" style="list-style: none; padding: 0;">
           <!-- Fetch from JS -->
         </ul>
