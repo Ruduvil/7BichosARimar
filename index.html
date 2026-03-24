@@ -1,118 +1,338 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>7 Bichos a Rimar - O Livro</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7 Bichos a Rimar — O Livro</title>
+<link rel="stylesheet" href="css/style.css">
+<!-- Integração Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <!-- Menu Global Tipo Apple (Preto) -->
-  <nav class="navbar">
-    <div class="nav-links">
-      <a href="index.html">Sílvia Duarte</a>
-      <a href="illustrations.html">Galeria</a>
-      <a href="https://www.youtube.com/" target="_blank">Entrevistas</a>
-      <a href="admin.html">Admin</a>
-    </div>
-  </nav>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">🌿</div>
+    <div class="nav-logo-text">7 Bichos a Rimar <span>por Sílvia Duarte</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Início</a>
+    <a href="illustrations.html">Galeria</a>
+    <a href="admin.html">Área Reservada</a>
+    <a href="order.html" class="nav-cta">Comprar — 10€</a>
+  </div>
+</nav>
 
-  <!-- Sub-Menu do Produto (O Livro) -->
-  <div class="sub-nav">
-    <div class="sub-nav-brand">7 Bichos a Rimar</div>
-    <div class="sub-nav-actions">
-      <a href="#sobre">Visão Geral</a>
-      <a href="order.html" class="btn-buy">Comprar</a>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-pattern"></div>
+  </div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Livro infantil premiado em escolas</div>
+    <h1 class="hero-h1" id="hero-title">
+      Rimas que ensinam.<br>
+      Histórias que <em><span class="accent-word">ficam</span></em><br>
+      para sempre.
+    </h1>
+    <p class="hero-desc" id="hero-desc">
+      Um livro de poesia ilustrada para crianças dos 3 aos 8 anos, onde sete bichos encantadores ensinam sobre a natureza, a amizade e as palavras.
+    </p>
+    <div class="hero-actions">
+      <a href="order.html" class="btn-main">
+        Encomendar agora
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#sobre" class="btn-ghost">Ver o livro →</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-avatars">
+        <div class="trust-avatar" style="background:#74b49b">M</div>
+        <div class="trust-avatar" style="background:#c9a84c">A</div>
+        <div class="trust-avatar" style="background:#c0614a">R</div>
+        <div class="trust-avatar" style="background:#2d6a4f">S</div>
+      </div>
+      <div class="trust-text">
+        <strong>+200 famílias</strong> já têm este livro em casa
+        <span class="trust-stars">★★★★★ 4.9/5</span>
+      </div>
     </div>
   </div>
-
-  <!-- Hero Section "Apple Style" -->
-  <header class="hero">
-    <div class="container">
-      <h1 class="hero-title" id="hero-title">A magia das palavras.</h1>
-      <h2 class="hero-subtitle" id="hero-desc">Rimas cativantes. Ilustrações únicas. Tudo num só livro.</h2>
-      <p class="hero-desc">Uma obra poderosa que desperta o interesse das crianças pela natureza.</p>
-      
-      <div class="hero-links">
-        <a href="#sobre">Saber mais ></a>
-        <a href="order.html">Comprar ></a>
+  <div class="hero-right">
+    <div class="book-scene">
+      <div class="book-shadow"></div>
+      <div class="book-3d">
+        <div class="book-cover-3d">
+          <div class="book-spine"></div>
+          <div class="book-texture"></div>
+          <!-- A tua capa real! O fundo branco mistura-se com o 3D -->
+          <img src="capa.jpg" alt="Capa real dos 7 Bichos" class="book-cover-img" onerror="this.src='https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=600'">
+        </div>
       </div>
-
-      <div class="hero-img-container">
-        <!-- A imagem real da capa deve ser "capa.jpg". A capa tem fundo branco, o que a faz misturar perfeitamente com o var(--bg-secondary) que é um branco sujo "Apple". -->
-        <img src="capa.jpg" alt="Capa 7 Bichos a Rimar" onerror="this.src='https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=600'">
+      <div class="book-badge">
+        <span>10€</span>
+        <span>portes incl.</span>
+      </div>
+      <div class="floating-card float-card-1">
+        <div class="fc-label">Avaliação média</div>
+        <div class="fc-value">★ 4.9</div>
+      </div>
+      <div class="floating-card float-card-2">
+        <div class="fc-label">Já em casa de</div>
+        <div class="fc-avatars">
+          <div class="fc-avatar" style="background:#74b49b">M</div>
+          <div class="fc-avatar" style="background:#c9a84c">A</div>
+          <div class="fc-avatar" style="background:#c0614a">R</div>
+        </div>
+        <div class="fc-stars">200+ famílias ★★★★★</div>
       </div>
     </div>
-  </header>
+  </div>
+</section>
 
-  <main>
-    <!-- História -->
-    <section id="sobre" class="section" style="background: var(--bg-color);">
-      <div class="container">
-        <h2>Pequenos bichos. Grandes lições.</h2>
-        <p id="about-text">
-          Criado com foco na aprendizagem e desenvolvimento infantil, o "7 Bichos a Rimar" 
-          oferece uma viagem lúdica e pedagógica. A poesia e as ilustrações unem forças para 
-          criar uma experiência que capta a atenção dos mais novos desde a primeira página.
-        </p>
-      </div>
-    </section>
+<!-- CREDIBILITY BAR -->
+<div class="cred-bar">
+  <div class="cred-item">
+    <span class="cred-icon">🏫</span>
+    <div class="cred-text">
+      <strong>Apresentado em escolas</strong>
+      <span>C.E. Gilmonde · Ponte da Barca · AE D. Maria II</span>
+    </div>
+  </div>
+  <div class="cred-divider"></div>
+  <div class="cred-item">
+    <span class="cred-icon">📖</span>
+    <div class="cred-text">
+      <strong>Recomendado por educadores</strong>
+      <span>Faixa etária: 3 a 8 anos</span>
+    </div>
+  </div>
+  <div class="cred-divider"></div>
+  <div class="cred-item">
+    <span class="cred-icon">🎨</span>
+    <div class="cred-text">
+      <strong>Ilustrações originais</strong>
+      <span>por Alexandre Reis</span>
+    </div>
+  </div>
+  <div class="cred-divider"></div>
+  <div class="cred-item">
+    <span class="cred-icon">📦</span>
+    <div class="cred-text">
+      <strong>Envio para todo Portugal</strong>
+      <span>10€ · portes incluídos</span>
+    </div>
+  </div>
+</div>
 
-    <!-- Apresentações Grid -->
-    <section class="section" style="background: var(--bg-secondary); border-top: 1px solid rgba(0,0,0,0.05);">
-      <div class="container">
-        <h2>Mais de 100 rimas partilhadas nas escolas.</h2>
-        <p>Apresentações exclusivas para inspirar o gosto pela leitura desde cedo.</p>
-        
-        <div class="grid-2">
-          <div class="card" style="background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
-            <h3>C.E. Gilmonde & Ponte da Barca</h3>
-            <p>Interações repletas de criatividade e dinâmicas nas salas de aula.</p>
-            <a href="#">Ver detalhes ></a>
+<!-- ABOUT THE BOOK -->
+<div id="sobre" style="background:var(--cream)">
+  <div class="section">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-img-wrap">
+          <div class="about-img-pattern"></div>
+          <div class="about-book-preview">
+            <img src="capa.jpg" alt="Mini Capa" onerror="this.src='https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=400'" style="border-radius: 4px 10px 10px 4px; display:block;">
           </div>
-          <div class="card" style="background: #1d1d1f; color: #f5f5f7;">
-            <h3 style="color: #fff;">AE D. Maria II, Braga</h3>
-            <p style="color: #86868b;">Os nossos bichos transmitiram valores positivos a toda a escolaridade.</p>
+          <div class="about-stat-card">
+            <div class="num">7</div>
+            <div class="lbl">bichos, 7 rimas<br>1 aventura</div>
           </div>
         </div>
       </div>
-    </section>
+      <div class="about-content reveal reveal-delay-1">
+        <div class="about-tag">📖 Sobre o livro</div>
+        <h2 class="about-h2">Um livro que as crianças pedem para ler outra vez.</h2>
+        <p class="about-desc" id="about-text">Cada bicho tem a sua rima, a sua personalidade e a sua lição. Através de versos cuidadosamente construídos e ilustrações cheias de detalhe, este livro transforma a leitura numa brincadeira que fica na memória.</p>
+        <ul class="detail-list">
+          <li><span class="detail-icon">🎯</span> Ideal para crianças dos 3 aos 8 anos</li>
+          <li><span class="detail-icon">🌿</span> Temática da natureza e biodiversidade</li>
+          <li><span class="detail-icon">🎨</span> Ilustrações originais de Alexandre Reis</li>
+          <li><span class="detail-icon">📚</span> Utilizado em sessões pedagógicas em escolas</li>
+          <li><span class="detail-icon">📦</span> Portes de envio incluídos no preço</li>
+        </ul>
+        <a href="order.html" class="btn-main" style="width:fit-content">
+          Adquirir um exemplar
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <!-- Outros conteúdos -->
-    <section class="section">
-      <div class="container">
-        <h2>Aprender para lá das páginas.</h2>
-        <div class="grid-2">
-          <div class="card">
-            <h3>Vídeos "Lara no Mundo dos Livros"</h3>
-            <p>Assista um pouco da apresentação e acompanhe a reação autêntica de quem lê.</p>
-            <a href="https://www.youtube.com/" target="_blank">Ver no YouTube ></a>
-          </div>
-          <div class="card">
-            <h3>Jogos Pedagógicos</h3>
-            <p>Descargas disponíveis com exercícios e desenhos para pintar em casa.</p>
-            <a href="#">Brevemente.</a>
+<!-- AUTHOR -->
+<div class="author-section">
+  <div class="author-inner">
+    <div class="author-photo reveal">✍️</div>
+    <div class="reveal reveal-delay-1">
+      <div class="author-quote-mark">"</div>
+      <p class="author-quote">Escrevi este livro para que as crianças descubram a beleza das palavras enquanto exploram o mundo natural que nos rodeia.</p>
+      <p class="author-bio">
+        <strong style="color:var(--forest);font-weight:500">Sílvia Duarte</strong> é escritora portuguesa com uma profunda paixão pela literatura infantil. O livro "7 Bichos a Rimar" nasceu do desejo de aproximar as crianças da natureza e da poesia de uma forma lúdica. Tem sido apresentado em diversas escolas com grande sucesso.
+      </p>
+      <div class="author-name">Sílvia Maria Vieira Duarte</div>
+      <div class="author-role">Escritora · Portugal</div>
+      <div class="illustrator-tag">
+        🎨 Ilustrações por <strong>&nbsp;Alexandre Reis</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCHOOLS -->
+<div class="schools-section">
+  <div class="schools-inner">
+    <div class="reveal">
+      <div class="section-tag">Dinâmicas Pedagógicas</div>
+      <h2 class="section-h2">Presente nas melhores escolas.</h2>
+      <p class="section-lead">O livro foi apresentado em contexto escolar, com sessões interativas que inspiram o gosto pela leitura desde cedo.</p>
+    </div>
+    <div class="schools-grid">
+      <div class="school-card reveal reveal-delay-1">
+        <div class="school-icon">🏫</div>
+        <div class="school-name">C.E. Gilmonde</div>
+        <p class="school-desc">Sessões repletas de criatividade e dinâmicas nas salas de aula. Os alunos participaram com entusiasmo.</p>
+        <span class="school-year">Apresentação Realizada</span>
+      </div>
+      <div class="school-card reveal reveal-delay-2">
+        <div class="school-icon">🌿</div>
+        <div class="school-name">Agrupamento de Ponte da Barca</div>
+        <p class="school-desc">Interações pedagógicas que conectam os conteúdos do livro com a poesia e rimas na prática.</p>
+        <span class="school-year">Apresentação Realizada</span>
+      </div>
+      <div class="school-card reveal reveal-delay-3">
+        <div class="school-icon">⭐</div>
+        <div class="school-name">AE D. Maria II — Braga</div>
+        <p class="school-desc">Os bichos transmitiram valores positivos a toda a escolaridade. Excelente receção presencial.</p>
+        <span class="school-year">Apresentação Realizada</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials-section">
+  <div class="testimonials-inner">
+    <div class="test-section-tag reveal">O que dizem as famílias</div>
+    <h2 class="test-h2 reveal">Pais e professores adoram.</h2>
+    <p class="test-lead reveal">Partilhas reais daqueles que já se deixaram contagiar pela magia.</p>
+    <div class="test-grid">
+      <div class="test-card reveal reveal-delay-1">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"As rimas ficaram na cabeça de toda a família! Um livro que recomendo sem hesitar para qualquer pequenote."</p>
+        <div class="test-author">
+          <div class="test-avatar">M</div>
+          <div>
+            <div class="test-name">Mariana S.</div>
+            <div class="test-role">Mãe · Braga</div>
           </div>
         </div>
       </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2024 Sílvia Duarte. Todos os direitos reservados.</p>
-      <p>Ilustrações por Alexandre Reis.</p>
-      <div style="margin-top: 10px;">
-        <a href="admin.html">Área Reservada</a> | 
-        <a href="https://www.facebook.com/7bichosarimar" target="_blank">Facebook</a> | 
-        <a href="https://www.instagram.com/7bichosarimar/" target="_blank">Instagram</a>
+      <div class="test-card reveal reveal-delay-2">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Usámos este livro numa atividade escolar sobre bichos e natureza. As ilustrações despertaram uma imensa curiosidade!"</p>
+        <div class="test-author">
+          <div class="test-avatar">A</div>
+          <div>
+            <div class="test-name">Ana P.</div>
+            <div class="test-role">Professora</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card reveal reveal-delay-3">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Ofereci ao meu sobrinho. É um deitar constante com a leitura focada nestes 7 bichinhos fantásticos."</p>
+        <div class="test-author">
+          <div class="test-avatar">R</div>
+          <div>
+            <div class="test-name">Ricardo F.</div>
+            <div class="test-role">Pai · Porto</div>
+          </div>
+        </div>
       </div>
     </div>
-  </footer>
+  </div>
+</div>
 
-  <script src="js/supabase.js"></script>
-  <script src="js/main.js"></script>
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-bg-circle"></div>
+  <div class="cta-bg-circle-2"></div>
+  <div class="cta-inner">
+    <div class="cta-tag reveal">✦ Disponível agora</div>
+    <h2 class="cta-h2 reveal">Ofereça a magia das rimas.</h2>
+    <p class="cta-desc reveal">Envio rápido. Portes incluídos. O presente intelectual e divertido perfeito desta temporada.</p>
+    <div class="cta-price-row reveal">
+      <div class="cta-price">10€</div>
+      <div class="cta-price-label">
+        <strong>Preço único exemplar</strong>
+        Portes de envio incluídos<br>para todo Portugal
+      </div>
+    </div>
+    <div class="cta-actions reveal">
+      <a href="order.html" class="btn-main" style="font-size:17px;padding:17px 36px">
+        Encomendar agora
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-mark">🌿</div>
+          <div class="footer-logo-text">7 Bichos a Rimar</div>
+        </div>
+        <div class="footer-tagline">A verdadeira poesia inspirada na vasta beleza da natureza.</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>O Livro</h4>
+          <a href="#sobre">Resumo</a>
+          <a href="illustrations.html">Galeria Fantástica</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto e Encomendas</h4>
+          <a href="order.html">Comprar Livro</a>
+          <a href="https://www.facebook.com/7bichosarimar" target="_blank">Acompanhar no Facebook</a>
+        </div>
+        <div class="footer-col">
+          <h4>Privado</h4>
+          <a href="admin.html">Dashboard Administrador</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2024 Sílvia Duarte. Ilustrações de Alexandre Reis. Todos os direitos reservados.</div>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/7bichosarimar" class="social-icon" target="_blank">Fb</a>
+        <a href="https://www.instagram.com/7bichosarimar/" class="social-icon" target="_blank">Ig</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Animations Setup
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').style.boxShadow =
+    window.scrollY > 10 ? '0 4px 30px rgba(0,0,0,.08)' : 'none';
+});
+</script>
+<script src="js/main.js"></script>
+
 </body>
 </html>
