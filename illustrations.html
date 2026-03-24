@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ilustrações | 7 Bichos a Rimar</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .gallery-container {
+      padding: 8rem 5% 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .gallery-item {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover {
+      transform: translateY(-5px);
+    }
+    .gallery-img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+    .gallery-info {
+      padding: 1.5rem;
+    }
+    .gallery-info h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .gallery-info p {
+      color: #718096;
+      font-size: 0.95rem;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">7 Bichos a Rimar</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-item">O Livro</a>
+      <a href="illustrations.html" class="nav-item" style="color: var(--primary);">Ilustrações</a>
+    </div>
+  </nav>
+
+  <main class="gallery-container">
+    <h1 style="text-align: center;">Galeria de Ilustrações</h1>
+    <p style="text-align: center; color: #4a5568;">Os desenhos dos 7 Bichos feitos pela nossa comunidade maravilhosa!</p>
+    
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- Exemplo estático caso não haja DB ainda -->
+      <div class="gallery-item">
+        <!-- Placeholder -->
+        <img src="https://images.unsplash.com/photo-1596468202573-0fdd0dcc93fc?auto=format&fit=crop&q=80&w=600" alt="Exemplo" class="gallery-img">
+        <div class="gallery-info">
+          <h3>O Leão Valente</h3>
+          <p>Por: Joãozinho, 7 anos</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 7 Bichos a Rimar.</p>
+  </footer>
+
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

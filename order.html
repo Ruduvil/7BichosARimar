@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprar | 7 Bichos a Rimar</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .order-container {
+      max-width: 600px;
+      margin: 8rem auto 4rem;
+      background: white;
+      padding: 3rem;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .form-control {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">7 Bichos a Rimar</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-item">O Livro</a>
+      <a href="illustrations.html" class="nav-item">Ilustrações</a>
+    </div>
+  </nav>
+
+  <main class="order-container">
+    <h1 style="text-align: center;">Leva os Bichos para Casa</h1>
+    <p style="text-align: center; margin-bottom: 2rem; color: #4a5568;">Preenche o formulário para encomendares o teu exemplar.</p>
+    
+    <form id="orderForm">
+      <div class="form-group">
+        <label>Nome Completo</label>
+        <input type="text" id="custName" class="form-control" required placeholder="Ex: João Silva">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="custEmail" class="form-control" required placeholder="joao@email.com">
+      </div>
+      <div class="form-group">
+        <label>Morada de Envio</label>
+        <textarea id="custAddress" class="form-control" rows="3" required placeholder="Rua, Código Postal, Cidade"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Quantidade Pagamento</label>
+        <select class="form-control">
+          <option>1 Livro - Pagamento Seguro</option>
+          <option>2 Livros - Pagamento Seguro</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary" style="width: 100%; font-size: 1.1rem; margin-top: 1rem;">Prosseguir para Pagamento (Seguro)</button>
+    </form>
+    <div id="orderMsg" style="margin-top: 1rem; text-align: center; font-weight: bold;"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 7 Bichos a Rimar.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
