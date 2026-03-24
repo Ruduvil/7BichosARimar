@@ -18,9 +18,10 @@
     </div>
   </nav>
 
-  <header class="hero">
+  <!-- Clean white background to make the white/black book cover pop out without clashing -->
+  <header class="hero" style="background: white;">
     <div class="hero-content">
-      <h1 id="hero-title">A magia das palavras para as crianças</h1>
+      <h1 id="hero-title" style="color: #1A2E1A;">A magia das palavras para as crianças</h1>
       <p id="hero-desc">Um livro escrito por Sílvia Duarte, cheio de rimas cativantes e ilustrações únicas de Alexandre Reis. Ideal para partilhar conhecimento e brincar de forma saudável.</p>
       <div style="display: flex; gap: 1rem; margin-top: 2rem;">
         <a href="order.html" class="btn-primary">Adquirir Livro</a>
@@ -28,12 +29,12 @@
       </div>
     </div>
     <div class="hero-image">
-      <!-- A usar o nome da imagem como capa.jpg da mesma pasta, ou fallback online -->
-      <img src="capa.jpg" alt="Capa do livro 7 Bichos a Rimar" onerror="this.src='https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=800&h=600'">
+      <!-- Exibe a imagem de capa.jpg presente na pasta. Como a capa é branca com um bicho grande, o fundo de teto branco acima ajudará a enquadrá-la. -->
+      <img src="capa.jpg" alt="Capa 7 Bichos a Rimar" onerror="this.src='https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=600'">
     </div>
   </header>
 
-  <section class="section" style="background: white;">
+  <section class="section">
     <h2 class="section-title">A História por trás dos Bichos</h2>
     <div style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.25rem; color: #4a5568;">
       <p id="about-text">
@@ -43,7 +44,6 @@
     </div>
   </section>
 
-  <!-- NOVA SECÇÃO: Escolas e Apresentações -->
   <section class="section" style="background: var(--accent);">
     <h2 class="section-title">Apresentações nas Escolas</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto;">
@@ -62,18 +62,17 @@
     </div>
   </section>
 
-  <!-- NOVA SECÇÃO: Jogos e Vídeos -->
   <section class="section" style="background: white;">
     <h2 class="section-title">Explora Mais!</h2>
     <div style="display: flex; gap: 4rem; justify-content: center; flex-wrap: wrap;">
       <div style="text-align: center; max-width: 450px; padding: 2rem; border: 2px dashed var(--secondary); border-radius: 20px;">
         <h3 style="color: var(--primary); font-size: 1.8rem;">🎬 Vídeos</h3>
-        <p style="color: #4a5568; margin: 1rem 0;">Acompanha as novidades no YouTube! Espreita a participação especial na rubrica "Lara no Mundo dos Livros".</p>
+        <p style="color: #4a5568; margin: 1rem 0;">Acompanha as novidades no YouTube! Espreita a participação na rubrica "Lara no Mundo dos Livros".</p>
         <a href="https://www.youtube.com/" target="_blank" class="btn-primary" style="margin-top: 1rem;">Ver no YouTube</a>
       </div>
       <div style="text-align: center; max-width: 450px; padding: 2rem; border: 2px dashed var(--secondary); border-radius: 20px;">
         <h3 style="color: var(--primary); font-size: 1.8rem;">🎲 Jogos</h3>
-        <p style="color: #4a5568; margin: 1rem 0;">Descarga jogos e desenhos dos teus bichos favoritos para pintar e aprender de forma pedagógica em casa!</p>
+        <p style="color: #4a5568; margin: 1rem 0;">Descarga jogos e desenhos dos teus bichos favoritos para pintar e aprender em casa!</p>
         <button class="btn-primary" style="background: var(--secondary); color: var(--text-dark); margin-top: 1rem;">Disponível em Breve</button>
       </div>
     </div>
@@ -84,6 +83,7 @@
     <a href="admin.html" style="font-size: 0.8rem; color: #8FBC8F; margin-top: 1rem; display: block;">Área Reservada</a>
   </footer>
 
+  <script src="js/supabase.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
