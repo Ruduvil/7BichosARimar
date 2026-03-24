@@ -3,84 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>7 Bichos a Rimar | O Livro</title>
+  <title>7 Bichos a Rimar - O Livro</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
+  <!-- Menu Global Tipo Apple (Preto) -->
   <nav class="navbar">
-    <a href="index.html" class="nav-brand">🍃 7 Bichos a Rimar</a>
     <div class="nav-links">
-      <a href="index.html" class="nav-item">O Livro</a>
-      <a href="illustrations.html" class="nav-item">Ilustrações</a>
-      <a href="order.html" class="btn-primary">Comprar Agora</a>
+      <a href="index.html">Sílvia Duarte</a>
+      <a href="illustrations.html">Galeria</a>
+      <a href="https://www.youtube.com/" target="_blank">Entrevistas</a>
+      <a href="admin.html">Admin</a>
     </div>
   </nav>
 
-  <!-- Clean white background to make the white/black book cover pop out without clashing -->
-  <header class="hero" style="background: white;">
-    <div class="hero-content">
-      <h1 id="hero-title" style="color: #1A2E1A;">A magia das palavras para as crianças</h1>
-      <p id="hero-desc">Um livro escrito por Sílvia Duarte, cheio de rimas cativantes e ilustrações únicas de Alexandre Reis. Ideal para partilhar conhecimento e brincar de forma saudável.</p>
-      <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-        <a href="order.html" class="btn-primary">Adquirir Livro</a>
-        <a href="illustrations.html" class="btn-primary" style="background: var(--secondary); color: var(--text-dark);">Ver Ilustrações</a>
-      </div>
+  <!-- Sub-Menu do Produto (O Livro) -->
+  <div class="sub-nav">
+    <div class="sub-nav-brand">7 Bichos a Rimar</div>
+    <div class="sub-nav-actions">
+      <a href="#sobre">Visão Geral</a>
+      <a href="order.html" class="btn-buy">Comprar</a>
     </div>
-    <div class="hero-image">
-      <!-- Exibe a imagem de capa.jpg presente na pasta. Como a capa é branca com um bicho grande, o fundo de teto branco acima ajudará a enquadrá-la. -->
-      <img src="capa.jpg" alt="Capa 7 Bichos a Rimar" onerror="this.src='https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=600'">
+  </div>
+
+  <!-- Hero Section "Apple Style" -->
+  <header class="hero">
+    <div class="container">
+      <h1 class="hero-title" id="hero-title">A magia das palavras.</h1>
+      <h2 class="hero-subtitle" id="hero-desc">Rimas cativantes. Ilustrações únicas. Tudo num só livro.</h2>
+      <p class="hero-desc">Uma obra poderosa que desperta o interesse das crianças pela natureza.</p>
+      
+      <div class="hero-links">
+        <a href="#sobre">Saber mais ></a>
+        <a href="order.html">Comprar ></a>
+      </div>
+
+      <div class="hero-img-container">
+        <!-- A imagem real da capa deve ser "capa.jpg". A capa tem fundo branco, o que a faz misturar perfeitamente com o var(--bg-secondary) que é um branco sujo "Apple". -->
+        <img src="capa.jpg" alt="Capa 7 Bichos a Rimar" onerror="this.src='https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=600'">
+      </div>
     </div>
   </header>
 
-  <section class="section">
-    <h2 class="section-title">A História por trás dos Bichos</h2>
-    <div style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.25rem; color: #4a5568;">
-      <p id="about-text">
-        Criado com muito amor e dedicação, os "7 Bichos a Rimar" nasceram para ajudar as crianças a viajar pelo mundo da poesia de uma forma divertida e pedagógica. 
-        Uma obra que pretende despertar o interesse pela natureza através da rima e da diversão.
-      </p>
-    </div>
-  </section>
+  <main>
+    <!-- História -->
+    <section id="sobre" class="section" style="background: var(--bg-color);">
+      <div class="container">
+        <h2>Pequenos bichos. Grandes lições.</h2>
+        <p id="about-text">
+          Criado com foco na aprendizagem e desenvolvimento infantil, o "7 Bichos a Rimar" 
+          oferece uma viagem lúdica e pedagógica. A poesia e as ilustrações unem forças para 
+          criar uma experiência que capta a atenção dos mais novos desde a primeira página.
+        </p>
+      </div>
+    </section>
 
-  <section class="section" style="background: var(--accent);">
-    <h2 class="section-title">Apresentações nas Escolas</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto;">
-      <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow); text-align: center;">
-        <h3 style="color: var(--primary);">C.E. Gilmonde</h3>
-        <p style="color: #4a5568;">Uma apresentação inesquecível do livro, repleta de rimas, interações e alegria partilhada com os alunos.</p>
+    <!-- Apresentações Grid -->
+    <section class="section" style="background: var(--bg-secondary); border-top: 1px solid rgba(0,0,0,0.05);">
+      <div class="container">
+        <h2>Mais de 100 rimas partilhadas nas escolas.</h2>
+        <p>Apresentações exclusivas para inspirar o gosto pela leitura desde cedo.</p>
+        
+        <div class="grid-2">
+          <div class="card" style="background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+            <h3>C.E. Gilmonde & Ponte da Barca</h3>
+            <p>Interações repletas de criatividade e dinâmicas nas salas de aula.</p>
+            <a href="#">Ver detalhes ></a>
+          </div>
+          <div class="card" style="background: #1d1d1f; color: #f5f5f7;">
+            <h3 style="color: #fff;">AE D. Maria II, Braga</h3>
+            <p style="color: #86868b;">Os nossos bichos transmitiram valores positivos a toda a escolaridade.</p>
+          </div>
+        </div>
       </div>
-      <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow); text-align: center;">
-        <h3 style="color: var(--primary);">AE Ponte da Barca</h3>
-        <p style="color: #4a5568;">Momentos únicos de leitura onde as nossas fantásticas rimas ecoaram pelas salas de aula.</p>
-      </div>
-      <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow); text-align: center;">
-        <h3 style="color: var(--primary);">AE D. Maria II - Braga</h3>
-        <p style="color: #4a5568;">Os 7 bichos visitaram Braga para transmitir valores positivos de forma criativa a toda a escolaridade.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" style="background: white;">
-    <h2 class="section-title">Explora Mais!</h2>
-    <div style="display: flex; gap: 4rem; justify-content: center; flex-wrap: wrap;">
-      <div style="text-align: center; max-width: 450px; padding: 2rem; border: 2px dashed var(--secondary); border-radius: 20px;">
-        <h3 style="color: var(--primary); font-size: 1.8rem;">🎬 Vídeos</h3>
-        <p style="color: #4a5568; margin: 1rem 0;">Acompanha as novidades no YouTube! Espreita a participação na rubrica "Lara no Mundo dos Livros".</p>
-        <a href="https://www.youtube.com/" target="_blank" class="btn-primary" style="margin-top: 1rem;">Ver no YouTube</a>
+    <!-- Outros conteúdos -->
+    <section class="section">
+      <div class="container">
+        <h2>Aprender para lá das páginas.</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Vídeos "Lara no Mundo dos Livros"</h3>
+            <p>Assista um pouco da apresentação e acompanhe a reação autêntica de quem lê.</p>
+            <a href="https://www.youtube.com/" target="_blank">Ver no YouTube ></a>
+          </div>
+          <div class="card">
+            <h3>Jogos Pedagógicos</h3>
+            <p>Descargas disponíveis com exercícios e desenhos para pintar em casa.</p>
+            <a href="#">Brevemente.</a>
+          </div>
+        </div>
       </div>
-      <div style="text-align: center; max-width: 450px; padding: 2rem; border: 2px dashed var(--secondary); border-radius: 20px;">
-        <h3 style="color: var(--primary); font-size: 1.8rem;">🎲 Jogos</h3>
-        <p style="color: #4a5568; margin: 1rem 0;">Descarga jogos e desenhos dos teus bichos favoritos para pintar e aprender em casa!</p>
-        <button class="btn-primary" style="background: var(--secondary); color: var(--text-dark); margin-top: 1rem;">Disponível em Breve</button>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <footer>
-    <p>&copy; 2024 7 Bichos a Rimar. Texto: Sílvia Maria Vieira Duarte | Ilustrações: Alexandre Reis.</p>
-    <a href="admin.html" style="font-size: 0.8rem; color: #8FBC8F; margin-top: 1rem; display: block;">Área Reservada</a>
+    <div class="container">
+      <p>&copy; 2024 Sílvia Duarte. Todos os direitos reservados.</p>
+      <p>Ilustrações por Alexandre Reis.</p>
+      <div style="margin-top: 10px;">
+        <a href="admin.html">Área Reservada</a> | 
+        <a href="https://www.facebook.com/7bichosarimar" target="_blank">Facebook</a> | 
+        <a href="https://www.instagram.com/7bichosarimar/" target="_blank">Instagram</a>
+      </div>
+    </div>
   </footer>
 
   <script src="js/supabase.js"></script>

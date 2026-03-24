@@ -1,198 +1,97 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Outfit:wght@300;400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary: #2b7a3e; /* Verde floresta para condizer com o livro */
-  --primary-hover: #1e5c2d;
-  --secondary: #8FBC8F; /* Verde claro e suave */
-  --accent: #eaf5eb; /* Verde muito clarinho para fundos */
-  --bg-color: #Fdfdfd; 
-  --text-dark: #1A2E1A; /* Verde muito escuro para o texto */
-  --text-light: #ffffff;
-  --glass-bg: rgba(255, 255, 255, 0.9);
-  --glass-border: rgba(43, 122, 62, 0.2);
-  --shadow: 0 10px 40px rgba(43, 122, 62, 0.15);
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --text-dark: #1d1d1f;
+  --text-light: #f5f5f7;
+  --bg-color: #ffffff;
+  --bg-secondary: #fbfbfd;
+  --accent-blue: #0066cc;
+  --accent-hover: #0077ed;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-dark);
-  line-height: 1.6;
-  overflow-x: hidden;
+  line-height: 1.47059;
+  letter-spacing: -0.015em;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
-  font-family: 'Fredoka One', cursive; /* Playful, premium font for a children's book */
-  color: var(--primary);
-  margin-bottom: 1rem;
-}
+h1, h2, h3 { font-weight: 600; }
+a { text-decoration: none; color: inherit; }
 
-a {
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.3s ease;
-}
-
-/* Navbar */
+/* Global Navbar */
 .navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 1.2rem 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--glass-border);
-  z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  position: fixed; top: 0; width: 100%; height: 44px;
+  background: rgba(22, 22, 23, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  display: flex; justify-content: center; align-items: center; z-index: 1000;
 }
+.nav-links { display: flex; gap: 40px; align-items: center; font-size: 12px; font-weight: 400; color: #f5f5f7; opacity: 0.8; }
+.nav-links a:hover { opacity: 1; }
 
-.nav-brand {
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.75rem;
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+/* Sub-nav (Product Specific) */
+.sub-nav {
+  position: sticky; top: 44px; width: 100%; height: 52px;
+  background: var(--nav-bg); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;
+  padding: 0 max(5%, 20px); z-index: 999;
 }
+.sub-nav-brand { font-size: 20px; font-weight: 600; color: var(--text-dark); letter-spacing: -0.01em;}
+.sub-nav-actions { display: flex; gap: 24px; align-items: center; font-size: 13px; font-weight: 400; color: #1d1d1f; }
+.sub-nav-actions a:hover { color: var(--accent-blue); }
+.btn-buy {
+  background: var(--accent-blue); color: #fff; padding: 4px 12px; border-radius: 980px;
+  font-size: 12px; font-weight: 400; transition: background 0.3s;
+}
+.btn-buy:hover { background: var(--accent-hover); color: #fff; }
 
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-
-.nav-item {
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-.nav-item:hover {
-  color: var(--primary);
-}
-
-.btn-primary {
-  background: var(--primary);
-  color: var(--text-light);
-  padding: 0.75rem 1.75rem;
-  border-radius: 50px;
-  font-weight: 600;
-  box-shadow: 0 4px 15px rgba(43, 122, 62, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: none;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(43, 122, 62, 0.6);
-  background: var(--primary-hover);
-}
+/* Layout Grid */
+.container { max-width: 980px; margin: 0 auto; padding: 0 20px; }
 
 /* Hero Section */
 .hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8rem 5% 4rem;
-  background: radial-gradient(circle at top left, var(--accent) 0%, var(--bg-color) 100%);
+  text-align: center; padding-top: 160px; padding-bottom: 60px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
+.hero-title { font-size: 56px; line-height: 1.07; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+.hero-subtitle { font-size: 28px; line-height: 1.1; font-weight: 500; letter-spacing: 0.005em; margin-bottom: 14px; color: #1d1d1f; }
+.hero-desc { font-size: 21px; color: #86868b; font-weight: 400; margin-bottom: 25px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.hero-links a { color: var(--accent-blue); font-size: 21px; letter-spacing: 0; margin: 0 15px; font-weight: 400; }
+.hero-links a:hover { text-decoration: underline; }
 
-.hero-content {
-  flex: 1;
-  max-width: 600px;
-  animation: slideIn 0.8s ease-out;
-}
+.hero-img-container { margin-top: 60px; display: flex; justify-content: center; }
+.hero-img-container img { max-width: 100%; height: auto; max-height: 500px; object-fit: contain; } /* As the cover is white, it blends nicely into the light grey background */
 
-.hero-content h1 {
-  font-size: 3.5rem;
-  line-height: 1.15;
-  color: var(--primary);
-}
+/* Secondary Sections */
+.section { padding: 100px 0; text-align: center; }
+.section h2 { font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 20px; }
+.section p { font-size: 21px; color: #86868b; max-width: 700px; margin: 0 auto 40px; }
 
-.hero-content p {
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
-  color: #3b5240; /* Verde escuro acinzentado */
-}
-
-.hero-image {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  animation: float 6s ease-in-out infinite;
-  padding-left: 2rem;
-}
-
-.hero-image img {
-  max-width: 90%;
-  height: auto;
-  border-radius: 8px; /* Livro físico */
-  box-shadow: -15px 25px 50px rgba(0,0,0,0.15); /* Sombra 3D */
-  transform: rotate(-3deg);
-  border: 1px solid rgba(0,0,0,0.05);
-}
-
-/* Animations */
-@keyframes float {
-  0% { transform: translateY(0px) rotate(-3deg); }
-  50% { transform: translateY(-15px) rotate(-1deg); }
-  100% { transform: translateY(0px) rotate(-3deg); }
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(-30px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-/* Base Sections */
-.section {
-  padding: 6rem 5%;
-}
-
-.section-title {
-  text-align: center;
-  font-size: 2.75rem;
-  margin-bottom: 3.5rem;
-}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; }
+.card { background: var(--bg-secondary); border-radius: 18px; padding: 40px; text-align: center; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; }
+.card h3 { font-size: 24px; margin-bottom: 10px; }
+.card p { font-size: 17px; margin-bottom: 0; }
+.card a { color: var(--accent-blue); margin-top: 15px; }
+.card a:hover { text-decoration: underline; }
 
 /* Footer */
-footer {
-  background: var(--text-dark);
-  color: var(--text-light);
-  text-align: center;
-  padding: 4rem 5%;
-}
+footer { background: var(--bg-secondary); padding: 50px 0 30px; color: #86868b; font-size: 12px; border-top: 1px solid rgba(0,0,0,0.05); }
+footer .container { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+footer a { color: #515154; }
+footer a:hover { text-decoration: underline; }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    text-align: center;
-    padding-top: 8rem;
-  }
-  
-  .hero-image {
-    padding-left: 0;
-    margin-top: 3rem;
-  }
-  
-  .nav-links {
-    display: none;
-  }
-  
-  .hero-content h1 {
-    font-size: 2.5rem;
-  }
+@media (max-width: 734px) {
+  .hero-title { font-size: 40px; }
+  .hero-subtitle { font-size: 22px; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .sub-nav-brand { font-size: 18px; }
+  .nav-links { gap: 20px; }
 }
